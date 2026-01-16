@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prakash Raj | Video Editor & Motion Designer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Variables & Reset */
+        :root {
+            --bg-color: #020617;
+            --text-main: #e2e8f0;
+            --text-bright: #ffffff;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --accent-indigo: #6366f1;
+            --accent-purple: #a855f7;
+            --border-color: #1e293b;
+            --card-bg: rgba(15, 23, 42, 0.5);
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'Courier New', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Layout Containers */
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+        }
+
+        @media (min-width: 1024px) {
+            .main-grid {
+                grid-template-columns: repeat(12, minmax(0, 1fr));
+            }
+            .sidebar { grid-column: span 4; }
+            .content-area { grid-column: span 8; }
+        }
+
+        /* Background Glows */
+        .bg-glow-top {
+            position: fixed; top: -10%; left: -10%; width: 40%; height: 40%;
+            background: rgba(67, 56, 202, 0.1); border-radius: 50%; filter: blur(120px);
+            pointer-events: none; z-index: 0;
+        }
+        .bg-glow-bottom {
+            position: fixed; bottom: -10%; right: -10%; width: 40%; height: 40%;
+            background: rgba(124, 58, 237, 0.1); border-radius: 50%; filter: blur(120px);
+            pointer-events: none; z-index: 0;
+        }
+
+        /* Typography & Components */
+        .header {
+            margin-bottom: 6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: space-between;
+            }
+        }
+
+        .name-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            color: var(--text-bright);
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #6366f1, #a855f7, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-info {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            border-left: 1px solid var(--border-color);
+            padding-left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+        }
+
+        .contact-info a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover { color: var(--text-bright); }
+
+        /* Section Styling */
+        section { margin-bottom: 5rem; }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 900;
+            color: var(--text-bright);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .title-line { width: 32px; height: 1px; background: var(--accent-indigo); }
+
+        /* Skill Bars */
+        .skill-group { margin-bottom: 1.5rem; }
+        .skill-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .skill-track { display: flex; gap: 0.375rem; }
+        .skill-segment {
+            height: 6px;
+            flex: 1;
+            border-radius: 9999px;
+            background: linear-gradient(to right, var(--accent-indigo), var(--accent-purple));
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+        .skill-segment.empty { background: #1e293b; opacity: 0.3; box-shadow: none; }
+
+        /* Cards & Buttons */
+        .philosophy-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toolkit-tag {
+            font-size: 10px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--text-main);
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-indigo);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-primary:hover { background: #4f46e5; }
+
+        .btn-secondary {
+            background: #0f172a;
+            color: white;
+            border: 1px solid #334155;
+        }
+
+        .btn:active { transform: scale(0.95); }
+
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 3rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .timeline-item.active { border-color: var(--accent-indigo); }
+
+        .timeline-dot {
+            position: absolute;
+            left: -7px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #334155;
+        }
+
+        .active .timeline-dot {
+            background: var(--accent-indigo);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+        }
+
+        .date-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-indigo);
+            padding: 2px 8px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 4px;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Utility Classes */
+        .mb-4 { margin-bottom: 1rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-muted { color: var(--text-muted); }
+        .italic { font-style: italic; }
+        .leading-relaxed { line-height: 1.625; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-top"></div>
+    <div class="bg-glow-bottom"></div>
+
+    <div id="main-content" class="container fade-in">
+        
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1 class="name-title">
+                    PRAKASH <span class="gradient-text">RAJ</span>
+                </h1>
+                <p class="text-sm leading-relaxed text-muted" style="font-size: 1.25rem; max-width: 32rem;">
+                    Video Editor & Motion Graphics Designer specialized in <span style="color: white; font-weight: 500; text-decoration: underline; text-decoration-color: var(--accent-indigo); text-underline-offset: 4px;">social media storytelling</span> and cinematic narratives.
+                </p>
+            </div>
+            
+            <div class="contact-info">
+                <a href="mailto:prakashraj6502@gmail.com">✉ prakashraj6502@gmail.com</a>
+                <div style="color: var(--text-muted);">☎ +91 8248743311</div>
+                <div style="color: var(--text-muted);">📍 Chennai, India</div>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            
+            <!-- Sidebar -->
+            <aside class="sidebar" style="display: flex; flex-direction: column; gap: 4rem;">
+                
+                <!-- Skills -->
+                <section>
+                    <h2 class="section-title"><span class="title-line"></span> CORE COMPETENCE</h2>
+                    
+                    <div class="skill-group">
+                        <span class="skill-label">Motion Graphics</span>
+                        <div class="skill-track">
+                            <div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <span class="skill-label">Documentary Style</span>
+                        <div class="skill-track">
+                            <div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <span class="skill-label">Short-Form Content</span>
+                        <div class="skill-track">
+                            <div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <span class="skill-label">Color Grading</span>
+                        <div class="skill-track">
+                            <div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment"></div><div class="skill-segment empty"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Philosophy -->
+                <section class="philosophy-card">
+                    <h2 class="section-title" style="margin-bottom: 1rem;">🏆 PHILOSOPHY</h2>
+                    <p class="text-sm text-muted leading-relaxed">
+                        "Visual storytelling isn't just about cuts; it's about rhythm, retention, and psychology. Every frame should justify its existence."
+                    </p>
+                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                        <p style="font-size: 10px; font-family: var(--font-mono); text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem;">TOOLKIT</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <span class="toolkit-tag">Premiere Pro</span>
+                            <span class="toolkit-tag">After Effects</span>
+                            <span class="toolkit-tag">DaVinci Resolve</span>
+                            <span class="toolkit-tag">Photoshop</span>
+                            <span class="toolkit-tag">AI Workflows</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA Buttons -->
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <a href="https://www.linkedin.com/in/prakashraj2709/" target="_blank" class="btn btn-primary">Connect on LinkedIn →</a>
+                    <a href="#" class="btn btn-secondary">View Portfolio ↗</a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="content-area">
+                
+                <!-- Experience -->
+                <section>
+                    <h2 class="section-title">🎬 PROFESSIONAL EXPERIENCE</h2>
+
+                    <!-- Experience 1 -->
+                    <div class="timeline-item active">
+                        <div class="timeline-dot"></div>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 1rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: white;">Senior Video Editor</h3>
+                            <span class="date-badge">Nov 2025 – Present</span>
+                        </div>
+                        <p class="text-sm" style="font-weight: 500; color: #cbd5e1; margin-bottom: 1rem;">💼 Infinity Canvas | Marketing Agency</p>
+                        <p class="text-sm text-muted italic mb-4">Lead editor for India's top immigration consultants, engineering high-clarity visual narratives.</p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <li class="text-sm text-muted leading-relaxed" style="display: flex; gap: 0.75rem;">
+                                <span style="color: var(--accent-indigo);">▸</span>
+                                <span>Synthesized complex visa procedures into minimalist, motion-driven educational content.</span>
+                            </li>
+                            <li class="text-sm text-muted leading-relaxed" style="display: flex; gap: 0.75rem;">
+                                <span style="color: var(--accent-indigo);">▸</span>
+                                <span>Mastered quick-turnaround post-production for high-stakes international accounts.</span>
+                            </li>
+                            <li class="text-sm text-muted leading-relaxed" style="display: flex; gap: 0.75rem;">
+                                <span style="color: var(--accent-indigo);">▸</span>
+                                <span>Mentoring a squad of 3 editors on creative direction and technical workflow optimization.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Experience 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 1rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: white;">Video Editor / Post Production</h3>
+                            <span class="date-badge">Oct 2024 – Sep 2025</span>
+                        </div>
+                        <p class="text-sm" style="font-weight: 500; color: #cbd5e1; margin-bottom: 1rem;">💼 LMES Academy</p>
+                        <p class="text-sm text-muted italic mb-4">Retention architect for educational YouTube and digital advertising.</p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <li class="text-sm text-muted leading-relaxed" style="display: flex; gap: 0.75rem;">
+                                <span style="color: var(--accent-indigo);">▸</span>
+                                <span>Scaled engagement through high-retention editing techniques and narrative pacing.</span>
+                            </li>
+                            <li class="text-sm text-muted leading-relaxed" style="display: flex; gap: 0.75rem;">
+                                <span style="color: var(--accent-indigo);">▸</span>
+                                <span>Designed data-backed thumbnails resulting in improved Click-Through Rates.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Education -->
+                <section>
+                    <h2 class="section-title">🎓 EDUCATION & FOUNDATIONS</h2>
+                    <div class="timeline-item" style="padding-bottom: 0; border-left: 2px solid #0f172a;">
+                        <div class="timeline-dot"></div>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 1rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: white;">B.Sc Visual Communication</h3>
+                            <span class="date-badge">2017 – 2020</span>
+                        </div>
+                        <p class="text-sm" style="font-weight: 500; color: #cbd5e1; margin-bottom: 1rem;">🎓 A.M. Jain College</p>
+                        <p class="text-sm text-muted">Specialized in digital media, cinematography, and graphic design foundations.</p>
+                    </div>
+                </section>
+
+                <footer style="margin-top: 6rem; padding-top: 3rem; text-align: center; border-top: 1px solid #0f172a;">
+                    <p style="font-size: 0.75rem; color: #475569; font-family: var(--font-mono); letter-spacing: 0.1em;">
+                        © 2026 PRAKASH RAJ
+                    </p>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Trigger initial fade-in
+        window.addEventListener('DOMContentLoaded', () => {
+            const content = document.getElementById('main-content');
+            setTimeout(() => {
+                content.classList.add('visible');
+            }, 100);
+        });
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('fade-in');
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
